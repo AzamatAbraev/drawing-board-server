@@ -14,10 +14,11 @@ const boardSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  // creator: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  // },
+  creator: {
+    type: String,
+    required: [true, "Please provide your name"],
+  },
+  thumbnail: { type: String, required: false },
 });
 
 const Board = mongoose.model("Board", boardSchema);
