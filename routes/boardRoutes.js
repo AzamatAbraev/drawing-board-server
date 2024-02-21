@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { saveBoard, getBoard } = require("../controllers/board");
-router.post("/", saveBoard);
-router.get("/:name", getBoard);
+const { createBoard, getAllBoards } = require("../controllers/board");
+router.route("/").get(getAllBoards).post(createBoard);
 
 module.exports = router;

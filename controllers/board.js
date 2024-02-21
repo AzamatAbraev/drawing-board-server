@@ -1,28 +1,23 @@
 const Board = require("../models/Board");
 
-const saveBoard = async (name, data) => {
+const createBoard = async (req, res) => {
   try {
-    let board = await Board.findOne({ name });
-    if (board) {
-      board.data.push(...data); // Assuming data is an array of drawing actions
-      await board.save();
-    } else {
-      board = new Board({ name, data });
-      await board.save();
-    }
+    const { name, description } = req.body;
+    const newBoard = new Board({ name, description });
+    await newBoard.save();
+    res.status(201).json(newBoard);
   } catch (error) {
-    console.error("Server Error", error);
+    res.status(400).json({ error: error.message });
   }
 };
 
-const getBoard = async (name) => {
+const getAllBoards = async (req, res) => {
   try {
-    const board = await Board.findOne({ name });
-    if (!board) throw new Error("Board not found");
-    return board;
+    const boards = await Board.find();
+    res.json(boards);
   } catch (error) {
-    console.error("Server Error", error);
-    throw error;
+    res.status(500).json({ error: error.message });
   }
 };
-module.exports = { saveBoard, getBoard };
+
+module.exports = { createBoard, getAllBoards };
