@@ -24,7 +24,6 @@ const io = new Server(server, {
 const databaseConnection = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
-    console.log("Connected to Database successfully");
   } catch (error) {
     console.log(error);
   }
@@ -62,15 +61,12 @@ io.on("connection", (socket) => {
     socket.to(boardId).emit("clear");
     try {
       await Drawing.deleteMany({ boardId });
-      console.log(`Drawings cleared from MongoDB for boardId: ${boardId}`);
-    } catch (error) {
-      console.error("Error clearing drawings from MongoDB:", error);
-    }
+    } catch (error) {}
   });
 });
 
 app.use("/api/boards", boardRouter);
 
-server.listen(3000, () => {
-  console.log("server running at http://localhost:3000");
-});
+const port = process.env.PORT || 3000;
+
+server.listen(port);

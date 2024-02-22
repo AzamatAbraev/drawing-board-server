@@ -51,7 +51,6 @@ const updateThumbnail = async (req, res) => {
       board: updatedBoard,
     });
   } catch (error) {
-    console.error("Failed to update thumbnail:", error);
     res
       .status(500)
       .send({ message: "Failed to update thumbnail", error: error.message });
